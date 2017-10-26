@@ -13,8 +13,9 @@ We also have the following works that do not have notes:
 * LAMP : Data Provenance for Graph Based Machine Learning Algorithms through Derivative Computation (_HOW_, _TOOL_)
 * 'Why Should I Trust You ?'' Explaining the Predictions of Any Classifier (_HOW_)
 * Diagnosing Machine Learning Pipelines with Fine-grained Lineage (_TOOL_)
+* BadNets: Identifying Vulnerabilities in the Machine Learning Model Supply Chain (_WHY_)
 
-## Program As Black-Box Explanations
+## Program As Black-Box Explanations (_HOW_)
 - Need to identify which interpretable representation would be suitable to convey the local behavior of the model in an accurate and succinct manner, and existing model-agnostic approaches have focused only on (sparse) linear models.
 - There are many more other representations: additive models, decision rules, trees, sets, and lists, etc..
 - Problem is no single one of these representations, by itself, provides the necessary tradeoff between expressivity and interpretability; We don't really understand this tradeoff; it is also likely that different representations are appropriate for different kinds of users and domains.
@@ -31,3 +32,30 @@ We also have the following works that do not have notes:
 - They use program induction, where programs are synthesized automatically to match some desired goal. 
 - The goal is to find the optimial program _p* = argmin L(f, p, Z, T) + S(p)_, where f is the black-box system, p is the program, Z is a number of random perturbations of x weighted by T by their similarity to x, and p is the complexity of the program. We try to explain the individual prediction x.
 - The combinatorial optimization is solved using _simulated annealing_.
+
+## ActiveClean: Interactive Data Cleaning For Statistical Modeling
+- Many analysts do not approach cleaning as a one-shot pre-processing step, and instead, repeatedly alternate between cleaning and analysis, using the preliminary analysis on dirty data as a guide to help identify potential errors and design repairs
+- However, for statistical models, iteratively cleaning some data and re-training on a partially clean dataset can lead to biases in even the simplest models.
+- Statistical models face more dramatic sampling effects, and cleaning could result in a misleading trend, or even Simpson's paradox where aggregates over different populations of data can result in spurious relationships. Cleaning subsets of data to avoid the potentially expensive cleaning costs may be problematic.
+- This paper focuses on two common operations that often require iterative cleaning: removing outliers and attribute transformation. Since these two types of errors do not affect the schema or leave any obvious signs of corruption (e.g., NULL values), model training may seemingly succeed–albeit with an inaccurate result.
+- ActiveClean is a model training framework that allows for iterative data cleaning while preserving provable convergence properties. Applicable to *convex-loss models*. It is a *Machine-Learning-oriented iterative data cleaning framework*.
+- Key insight: treat the cleaning and training iteration as a form of Stochastic Gradient Descent, an iterative optimization method, incrementally take gradient steps (cleaning a sample of records) towards the global solution (i.e., the clean model).
+- Iterative data cleaning: the process of cleaning subsets of data, evaluating preliminary results, and then cleaning more data as necessary.
+- Two goals:
+	* Correctness. Will this clean-retrain loop converge to the intended result; ActiveClean provides an update algorithm with a monotone convergence guarantee where more cleaning is leads to a more accurate result in expectation.
+	* Efficiency. How can we best make use of the existing data and analyst effort. Sampling approach is limited by the curse of dimensionality. Sampling further has a problem of scarcity, where errors that are rare may not show up in the sample.
+- ActiveClean studies the problem of prioritizing modifications to *both features and labels* in existing examples. It handles incorrect values in any part (label or feature) of an example.
+- The Update Problem is to update the model with a monotone convergence guarantee such that more cleaning implies a more accurate model.
+- The prioritization problem is to select batches in such a way that the model converges in the fewest iterations possible.
+- ActiveClean approximates the gradient from a sample of newly cleaned data, using a variation of gradient descent.
+- Optimizations include:
+	* If we know that a record is likely to be clean, we can move it from dirty set to clean set without having to sample it.
+	* We can set the sampling probabilities p(.) to favor records that are likely to affect the model.
+- Model is guaranteed to converge essentially with a rate proportional to the inaccuracy of the sample-based estimate.
+- It is well-known that even for an arbitrary initialization, SGD makes significant progress in less than one epoch (a pass through the entire dataset).
+- In the non-convex setting, ActiveClean will converge to the closest locally optimal value to the dirty model which is how we initialize ActiveClean.
+- If corrupted records are relatively rare, sampling might be very inefficient -> error detection techniques: exact rule-based detector and approximate adaptive detector
+- The sampling algorithm is designed to include records in each batch that are most valuable to the analyst’s model with a higher probability. The optimal sam- pling problem is defined as a search over sampling distributions to find the minimum variance sampling distribution.
+- This sampling distribution prioritizes records with higher gradients, i.e., make a larger impact during optimization. The challenge is that this particular optimal distribution depends on knowing the clean value of a record.
+- As the analyst cleans more data, we can build a model for how cleaned data relates to dirty data. By using the detector from the previous section to estimate the impact of data cleaning, we show that we can estimate the cleaned values.
+
