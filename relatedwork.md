@@ -59,3 +59,68 @@ We also have the following works that do not have notes:
 - This sampling distribution prioritizes records with higher gradients, i.e., make a larger impact during optimization. The challenge is that this particular optimal distribution depends on knowing the clean value of a record.
 - As the analyst cleans more data, we can build a model for how cleaned data relates to dirty data. By using the detector from the previous section to estimate the impact of data cleaning, we show that we can estimate the cleaned values.
 
+## An Empirical Evaluation of the Comprehensibility of Decision Table, Tree, and Rule-Based Predictive Models
+
+## Enslaving the algorithm: from a `right to an explanation' to a `right to better decisions'?
+- Because ML algorithms are trained on historical data, they risk replicating unwanted historical patterns of unfairness and/or discrimination (e.g., gender equality, racial policing, luxury advertising).
+- A severe obstacle to challenging such systems is that outputs, which translate with or without human intervention to decisions, are made not by humans or even human-legible rules, but by less scrutable mathematical techniques. This opacity has been described as creating a ``black box'' society.
+- Two related provisions in Data Protection Directive (DPD):
+	1. A ``significant'' decision could not be based solely on automated data processing.
+	2. Users have rights to obtain information about whether and how their particular personal data was processed, i.e., they have the specific right to obtain ``knowledge of the logic involved in any automatic processing'' of their data.
+
+## Rationalizing Neural Predictions
+- Many recent advances in NLP problems have come from formulating and training expressive and elaborate neural models. The gains in accuracy have come at the cost of interpretability since complex neural models offer little transparency concerning their inner workings.
+- This paper incorporates rationale generation as an integral part of the overall learning problem, but only limited to extractive (as opposed to abstractive) rationales.
+- In NLP, rationales are simply subsets of the words from the input text that satisfy two key properties.
+	1. Selected words represent short and coherent pieces of text.
+	2. Selected words must alone suffice for prediction as a substitute of the original text
+- In most practical applications, rationale generation must be learned entirely in an unsupervised manner.
+-  The model is composed of two modular components: the generator and the encoder. Our generator specifies a distribution over possible rationales (extracted text) and the encoder maps any such text to task specific target values. They are trained jointly to minimize a cost function that favors short, concise rationales while enforcing that the rationales alone suffice for accurate prediction.
+- Two domain for experimentation where ambiguity of what counts as a rationale in some contexts and performance of the task of selecting rationales is minimized: 
+	1. Multi-aspect sentiment analysis
+	2. The problem of retrieving similar questions
+- Beyond learning to understand or further constrain the network to be directly interpretable, one can estimate interpretable proxies that approximate the network (e.g., if-then rule, decision trees from trained networks). 
+- Ribeiro et al. (2016) propose a model-agnostic framework where the proxy model is learned only for the target sample (and its neighborhood) thus ensuring locally valid approximations.
+- Attention based models offer another means to explicate the inner workings of neural models.
+- In extractive rationale generation, our goal is to select a subset of the input sequence as a rationale.
+- We can think of the generator as a tagging model where each word in the input receives a binary tag pertaining to whether it is selected to be included in the rationale.
+- In our case, the generator is probabilistic and specifies a distribution over possible selections.
+- The rationale is introduced as a latent variable, a constraint that guides how to interpret the input sequence.
+- The encoder and generator are trained jointly, in an end-to-end fashion so as to function well together.
+- Rationale for a given sequence x can be equivalently defined in terms of binary variables {z1,..., zl} where each zt = 0 or 1 indicates whether word xt is selected or not. This is because the rational is a subset of text from the original input.
+- The generator can either be modeled as conditionally independent, i.e., each z is independent of other z's given the input string x. However, the model is unable to select phrases or refrain from selecting the same word again if already chosen.
+- To solve the previous problem, we can use a dependent selection of words. Also introduce another hidden state s whose role is to couple the selections.
+- Our generator and encoder are learned jointly to interact well but they are treated as independent units for modularity.
+- They efficiently sample from the generator using doubly stocahstic gradient decent, employing a REINFORCE-style algorithm. Additional constraints on the generator output can be helpful in alleviating problems of exploring potentially a large space of possible rationales in terms of their interaction with the encoder.
+- The model they employ is **recurrent convolution NN (RCNN)**, which is shown to work remarkably in clas- sification and retrieval applications, compared to e.g. CNNs and LSTMs.
+- The model is evaluated on two NLP applications:
+	1. Multi-aspect sentiment analysis on product reviews
+	2. Similar text retrieval on AskUbuntu question answering forum
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
