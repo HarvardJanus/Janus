@@ -5,6 +5,7 @@ We categorize all the related work into
 * _WHY_ paper: why do we want interpretability of black-box algorithms
 * _HOW_ paper: different approaches to interpret/explain black-box algorithms
 * _TOOL_ paper: tools that assist explanation of ML algorithms
+* _APP_ paper: uses explanation in applications
 
 We also have the following works that do not have notes:
 * The Mythos of Model Interpretability (_WHAT_)
@@ -33,7 +34,7 @@ We also have the following works that do not have notes:
 - The goal is to find the optimial program _p* = argmin L(f, p, Z, T) + S(p)_, where f is the black-box system, p is the program, Z is a number of random perturbations of x weighted by T by their similarity to x, and p is the complexity of the program. We try to explain the individual prediction x.
 - The combinatorial optimization is solved using _simulated annealing_.
 
-## ActiveClean: Interactive Data Cleaning For Statistical Modeling
+## ActiveClean: Interactive Data Cleaning For Statistical Modeling (_APP_)
 - Many analysts do not approach cleaning as a one-shot pre-processing step, and instead, repeatedly alternate between cleaning and analysis, using the preliminary analysis on dirty data as a guide to help identify potential errors and design repairs
 - However, for statistical models, iteratively cleaning some data and re-training on a partially clean dataset can lead to biases in even the simplest models.
 - Statistical models face more dramatic sampling effects, and cleaning could result in a misleading trend, or even Simpson's paradox where aggregates over different populations of data can result in spurious relationships. Cleaning subsets of data to avoid the potentially expensive cleaning costs may be problematic.
@@ -61,14 +62,14 @@ We also have the following works that do not have notes:
 
 ## An Empirical Evaluation of the Comprehensibility of Decision Table, Tree, and Rule-Based Predictive Models
 
-## Enslaving the algorithm: from a `right to an explanation' to a `right to better decisions'?
+## Enslaving the algorithm: from a 'right to an explanation' to a 'right to better decisions'?
 - Because ML algorithms are trained on historical data, they risk replicating unwanted historical patterns of unfairness and/or discrimination (e.g., gender equality, racial policing, luxury advertising).
-- A severe obstacle to challenging such systems is that outputs, which translate with or without human intervention to decisions, are made not by humans or even human-legible rules, but by less scrutable mathematical techniques. This opacity has been described as creating a ``black box'' society.
+- A severe obstacle to challenging such systems is that outputs, which translate with or without human intervention to decisions, are made not by humans or even human-legible rules, but by less scrutable mathematical techniques. This opacity has been described as creating a ''black box'' society.
 - Two related provisions in Data Protection Directive (DPD):
-	1. A ``significant'' decision could not be based solely on automated data processing.
-	2. Users have rights to obtain information about whether and how their particular personal data was processed, i.e., they have the specific right to obtain ``knowledge of the logic involved in any automatic processing'' of their data.
+	1. A ''significant'' decision could not be based solely on automated data processing.
+	2. Users have rights to obtain information about whether and how their particular personal data was processed, i.e., they have the specific right to obtain ''knowledge of the logic involved in any automatic processing'' of their data.
 
-## Rationalizing Neural Predictions
+## Rationalizing Neural Predictions (_HOW_)
 - Many recent advances in NLP problems have come from formulating and training expressive and elaborate neural models. The gains in accuracy have come at the cost of interpretability since complex neural models offer little transparency concerning their inner workings.
 - This paper incorporates rationale generation as an integral part of the overall learning problem, but only limited to extractive (as opposed to abstractive) rationales.
 - In NLP, rationales are simply subsets of the words from the input text that satisfy two key properties.
